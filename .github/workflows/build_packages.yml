@@ -132,7 +132,7 @@ jobs:
           sudo npm install -g json
           if [[ "${{ matrix.packageType }}" == "rpm" ]]; then
             sudo apt install -y python3-rpm python3-pip
-            sudo apt install rpmlint
+            sudo apt install -y rpmlint
           else
             sudo apt install -y dpkg-sig lintian dh-make
           fi
