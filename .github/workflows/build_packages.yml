@@ -107,9 +107,6 @@ jobs:
           touch /opt/hostedtoolcache/fixcleanstage
           curl -fsSL https://raw.githubusercontent.com/apache/arrow/refs/heads/main/ci/scripts/util_free_space.sh | bash
           sudo docker image prune --all --force
-          echo "HOME=$HOME" >> $GITHUB_ENV
-          echo "DOTNET_CLI_HOME=$HOME" >> $GITHUB_ENV
-          dotnet nuget locals all --clear
 #      - name: Import GPG
 #        uses: crazy-max/ghaction-import-gpg@v6
 #        id: gpg_step
@@ -163,6 +160,9 @@ jobs:
           rename -f -v "s/product([^\/]*)$/${PRODUCT_LOW}\$1/g" debian/*
           find debian/ -type f -exec sed -i "s/{{product}}/${PRODUCT_LOW}/g" {} ';'
           sed -i "s/{{package_header_tag_version}}/${PRODUCT_VERSION}.${BUILD_NUMBER}/g" debian/changelog debian/control
+          echo "HOME=$HOME" >> $GITHUB_ENV
+          echo "DOTNET_CLI_HOME=$HOME" >> $GITHUB_ENV
+          dotnet nuget locals all --clear
           export DEB_BUILD_OPTIONS="parallel=$(nproc)"
           dpkg-buildpackage -uc -us
 
@@ -172,6 +172,9 @@ jobs:
           cd ${PACKAGE_DIRECTORY}/install/rpm/SPECS
           mv ./SOURCES/product.rpmlintrc ./SOURCES/${PRODUCT_LOW}.rpmlintrc
           sed -i -e '/BuildRequires/d' product.spec
+          echo "HOME=$HOME" >> $GITHUB_ENV
+          echo "DOTNET_CLI_HOME=$HOME" >> $GITHUB_ENV
+          dotnet nuget locals all --clear
           rpmbuild -D "packager Ascensio System SIA <support@onlyoffice.com>" \
                    -D "_topdir $(pwd)" \
                    -D "version ${PRODUCT_VERSION}" \
