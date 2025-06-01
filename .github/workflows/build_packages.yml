@@ -130,6 +130,7 @@ jobs:
           echo "JAVA_HOME=$(dirname $(dirname "$JAVA_PATH"))" >> $GITHUB_ENV
           echo "HOME=$HOME" >> $GITHUB_ENV
           echo "DOTNET_CLI_HOME=$HOME" >> $GITHUB_ENV
+          DOTNET_CLI_HOME=$HOME
           sudo npm install -g json
           if [[ "${{ matrix.packageType }}" == "rpm" ]]; then
             sudo apt install -y python3-rpm python3-pip
@@ -162,6 +163,7 @@ jobs:
           sed -i "s/{{package_header_tag_version}}/${PRODUCT_VERSION}.${BUILD_NUMBER}/g" debian/changelog debian/control
           echo "HOME=$HOME" >> $GITHUB_ENV
           echo "DOTNET_CLI_HOME=$HOME" >> $GITHUB_ENV
+          DOTNET_CLI_HOME=$HOME
           dotnet nuget locals all --clear
           export DEB_BUILD_OPTIONS="parallel=$(nproc)"
           dpkg-buildpackage -uc -us
