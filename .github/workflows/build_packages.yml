@@ -122,6 +122,8 @@ jobs:
           sudo chmod 644 /usr/share/keyrings/yarnkey.gpg
           echo "deb [signed-by=/usr/share/keyrings/yarnkey.gpg] https://dl.yarnpkg.com/debian/ stable main" | \
           sudo tee /etc/apt/sources.list.d/yarn.list
+          echo "deb http://cz.archive.ubuntu.com/ubuntu jammy main universe" | \
+          sudo tee /etc/apt/sources.list.d/jammy.list
           curl -fsSL https://deb.nodesource.com/setup_20.x | sudo bash -
           sudo apt install -y dotnet-sdk-9.0 yarn nodejs rename unzip maven openjdk-21-jdk-headless
           JAVA_PATH=$(find /usr/lib/jvm/ -name "java" -path "*java-${JAVA_VERSION}*" | head -1)
@@ -130,7 +132,7 @@ jobs:
           sudo npm install -g json
           if [[ "${{ matrix.packageType }}" == "rpm" ]]; then
             sudo apt install -y python3-rpm python3-pip
-            sudo pip install rpmlint
+            sudo apt install rpmlint
           else
             sudo apt install -y dpkg-sig lintian dh-make
           fi
