@@ -92,6 +92,11 @@ jobs:
 
       - name: Free Disk Space
         run: |
+          touch /opt/fixcleanstage
+          mkdir /opt/microsoft
+          touch /opt/microsoft/fixcleanstage
+          mkdir /opt/hostedtoolcache/
+          touch /opt/hostedtoolcache/fixcleanstage
           curl -fsSL https://raw.githubusercontent.com/apache/arrow/refs/heads/main/ci/scripts/util_free_space.sh | bash
           sudo docker image prune --all --force
 
