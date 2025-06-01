@@ -165,15 +165,15 @@ jobs:
  #           --gpg-options "--pinentry-mode loopback --passphrase ${{ secrets.GPG_PRIVATE_KEY_PASS }}" \
  #           --batch ${PACKAGE_DIRECTORY}/install/*.deb
 
-      - name: Sign RPM Packages
-        if: matrix.packageType == 'rpm'
-        run: |
-          gpg --export --armor > gpgkey.pub && rpm --import gpgkey.pub
-          rpm -D "__gpg /usr/bin/gpg" \
-              -D "_gpg_path $HOME/.gnupg" \
-              -D "_gpg_name ${{ secrets.GPG_KEY_NAME }}" \
-              -D "_gpg_sign_cmd_extra_args --pinentry-mode loopback --passphrase ${{ secrets.GPG_PRIVATE_KEY_PASS }}" \
-              --addsign ${PACKAGE_DIRECTORY}/install/rpm/SPECS/RPMS/noarch/*.rpm 
+#      - name: Sign RPM Packages
+#        if: matrix.packageType == 'rpm'
+#        run: |
+#          gpg --export --armor > gpgkey.pub && rpm --import gpgkey.pub
+#          rpm -D "__gpg /usr/bin/gpg" \
+#              -D "_gpg_path $HOME/.gnupg" \
+#              -D "_gpg_name ${{ secrets.GPG_KEY_NAME }}" \
+#              -D "_gpg_sign_cmd_extra_args --pinentry-mode loopback --passphrase ${{ secrets.GPG_PRIVATE_KEY_PASS }}" \
+#              --addsign ${PACKAGE_DIRECTORY}/install/rpm/SPECS/RPMS/noarch/*.rpm 
 
       - name: Upload DEB Packages
         if: matrix.packageType == 'deb'
