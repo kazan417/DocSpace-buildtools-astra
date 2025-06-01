@@ -216,7 +216,7 @@ jobs:
   trigger_oci:
     name: Trigger ci-oci-install Workflow
     needs: [prepare, build]
-    runs-on: ubuntu-22.04
+    runs-on: self-hosted
     if: ${{ success() }}
     steps:
       - name: Trigger CI-OCI-Install Workflow
